@@ -1,5 +1,10 @@
 import {setIcons} from '../src/setIcons';
 
+let temperature = document.querySelector('.temperature__value');
+let condition = document.querySelector('.conditions__value');
+let humidity = document.querySelector('.humidity__value');
+let wind = document.querySelector('.wind__value')
+
 window.addEventListener('load', () => {
     let long;
     let lat;
@@ -148,6 +153,20 @@ btn.addEventListener('click', (event) => {
         let n = utcTime .getDay();
         console.log(days[n]);
         weekDay.textContent = days[n];
+
+        //вывод погодных данных
+        //temprature
+        //из кельвина в цельсии
+        let temp = data.main.temp;
+        temperature.textContent = Math.round(temp - 273.15) + 'С°';
+
+        //влажность
+        humidity.textContent = data.main.humidity + '%';
+        //облачность
+        condition.textContent = data.weather[0].description;
+
+        //ветер
+        wind.textContent = Math.floor(data.wind.speed) + 'm/s';       
         
 })
 })
