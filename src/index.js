@@ -99,25 +99,27 @@ btn.addEventListener('click', (event) => {
     let cityApi = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}`;
     //сохранение города в local storage
     
-    localStorage.setItem('city', searchCity);
-
-
     //определение элементов dom
     let city = document.querySelector('.city-name__title');
 
     //
-    console.log(localStorage.getItem('city'));
+    // console.log(localStorage.getItem('city'));
     //очищение инпута
-    input.value = ''
+    // input.value = ''
 
     //запрос на сервер
     fetch(cityApi)
     .then(response => {
         return response.json()
+
     })
+
     .then(data => {
         console.log(data);
         //set dom elements from api
+        //!!
+        // localStorage.setItem('city', searchCity);
+        //!!
         city.textContent = data.name;
 
         //смена иконки погоды
@@ -169,6 +171,9 @@ btn.addEventListener('click', (event) => {
         wind.textContent = Math.floor(data.wind.speed) + 'm/s';       
         
 })
+
+.catch(err => 
+    alert(err))
 })
 
 //получение и отображение текущей даты
