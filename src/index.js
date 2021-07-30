@@ -1,5 +1,6 @@
 import {setIcons} from '../src/setIcons';
-import {getDayOfTheWeek} from '../src/getDateAndTime';
+import {getDayOfTheWeek} from './getWeekday';
+import { getCurrentTime, formatTime } from './updateTime';
 
 let apiKey = '3e297a51b01ad56e318392fec6716e11';
 let city = document.querySelector('.city-name__title');
@@ -9,17 +10,17 @@ let temperature = document.querySelector('.temperature__value');
 let condition = document.querySelector('.conditions__value');
 let humidity = document.querySelector('.humidity__value');
 let wind = document.querySelector('.wind__value')
-let icon = document.querySelector('.weather-icon__img');    
+let input = document.querySelector('.search-form__input');
+let btn = document.querySelector('.search-form__button'); 
+
+/*Display weather conditions */
 
 function updateWeather (data) {
   //destructure arguments
   const { main, weather, wind } = data;
-//   console.log(data);
-
   //update temp, wind etc
   city.innerHTML = data.name;
-  //temprature
-  //из кельвина в цельсии
+  //temprature - from Kelvin to Celcius
   let temp = main.temp;
   temperature.textContent = Math.round(temp - 273.15) + "С°";
   //влажность
@@ -30,6 +31,7 @@ function updateWeather (data) {
   wind.textContent = Math.floor(wind.speed) + "m/s";
 }
 
+/*Getting data by current location */
 
 window.addEventListener('load', () => {
     let long;
@@ -49,19 +51,13 @@ window.addEventListener('load', () => {
             .then(data => {
                 console.log(data);
                 updateWeather(data);
-        
                 //смена иконки погоды
-
                 let elem = data.weather[0].icon;
-                console.log(elem)
                 setIcons(elem);
-
                 //получение даты 
                 let day = new Date();
-
+                let str = formatTime(day);
                 //отобразить время
-                let str = day.toLocaleTimeString('en-US');
-                
                 time.textContent = str;
                 //отобразить день недели
                 weekDay.textContent = getDayOfTheWeek(day);    
@@ -71,36 +67,24 @@ window.addEventListener('load', () => {
 })
 
 
-let input = document.querySelector('.search-form__input');
-let btn = document.querySelector('.search-form__button');
+/*Getting data by city name */
 
-//Поиск города по названию
 btn.addEventListener('click', (event) => {
     event.preventDefault();
-
     //объявление города поиска
     let searchCity = input.value;
-
     //апи
-    let apiKey = '3e297a51b01ad56e318392fec6716e11';
     let cityApi = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}`;
     //сохранение города в local storage
-    
-    //определение элементов dom
-    let city = document.querySelector('.city-name__title');
-
-    //
     localStorage.setItem('city', searchCity);
-    // console.log(localStorage.getItem('city'));
     //очищение инпута
     input.value = ''
-
 
     if (searchCity) {
         fetch(cityApi)
         .then(response => {
             if (!response.ok) {
-                throw Error(`is not ok: ` + response.status);
+                throw Error(`is not ok: ` + response.status) 
             }
             return response.json();
         })
@@ -114,21 +98,14 @@ btn.addEventListener('click', (event) => {
 
             //получение текущей даты
             const currentDate = new Date();
-            let utc_offset = currentDate.getTimezoneOffset();
-            //время в utc 
-            currentDate.setMinutes(currentDate.getMinutes() + utc_offset);
             //перевод текущего времени utc в секунды
-            const seconds = Date.parse(currentDate)/1000;
-            //расчет текущего времени utc (+0) во время в выбранном городе(+timezone)
+            const seconds = getCurrentTime(currentDate);
             let localSeconds = seconds + data.timezone;
             //перевод текущего времени в секундах в дату
             let utcTime = new Date(localSeconds*1000)
-
             //время в формате AM/PM
-            let str = utcTime.toLocaleTimeString('en-US');
-            // str = str.substring(str.indexOf(':') + 2, str.indexOf(':') + 4)
+            let str = formatTime(utcTime);
             time.textContent = str;
-
             weekDay.textContent = getDayOfTheWeek(utcTime); 
         })
     }
