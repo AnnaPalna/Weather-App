@@ -29,7 +29,7 @@ export function setIcons(elem) {
     }
     if (elem === '09d' || elem === '09n') {
         icon.src = `../animated/rainy-7.svg`;
-        content.style.background = 'linear-gradient(45deg, rgb(185, 203, 199) 42%, rgb(52, 197, 201) 92%)'
+        content.style.background = 'linear-gradient(25deg, rgb(185, 203, 199) 15%, rgb(52, 197, 201) 92%)'
     }
     if (elem === '10d' || elem === '10n') {
         icon.src = `../animated/rainy-3.svg`;

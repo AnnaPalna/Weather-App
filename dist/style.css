@@ -29,7 +29,6 @@ body {
 }
 
 .container {
-    width: 700px;
     text-align: center;
     margin: 0 auto;
 }
@@ -159,11 +158,20 @@ button.search-form__button {
 }
 
 /* Для адаптива */
+/* Доделать адаптив для экрана мене 570px 
+изменить флексы, шрифт, отступы */
 
- /* @media (max-width: 1199.98px) {  } */
+ @media (max-width: 767.98px) {
 
-/* @media (max-width: 991.98px) {  } */
+   .main-content {
+    width: 100%;
+   }
+ }
 
-/* @media (max-width: 767.98px) {  } */
+ @media (max-width: 575.98px) { 
+   .main-content {
+    width: 100%;
+    min-height: 400px;
+   }
+}  
 
-/* @media (max-width: 575.98px) {  }   */
