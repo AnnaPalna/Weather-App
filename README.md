@@ -11,6 +11,8 @@ $ npm start
 ```
 ## Overview
 
+![image](https://user-images.githubusercontent.com/65242237/127784290-4e67afd5-ff47-4b35-ac9d-4cbec06ca819.png)
+
 ### It uses:
 * Webpack
 * Babel
