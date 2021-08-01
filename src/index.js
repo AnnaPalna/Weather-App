@@ -23,11 +23,11 @@ function updateWeather (data) {
   //temprature - from Kelvin to Celcius
   let temp = main.temp;
   temperature.textContent = Math.round(temp - 273.15) + "С°";
-  //влажность
+  //humidity
   humidity.textContent = main.humidity + "%";
-  //облачность
+  //cloudy
   condition.textContent = weather[0].description;
-  //ветер
+  //wind
   wind.textContent = Math.floor(wind.speed) + "m/s";
 }
 
@@ -51,15 +51,14 @@ window.addEventListener('load', () => {
             .then(data => {
                 console.log(data);
                 updateWeather(data);
-                //смена иконки погоды
+                //change icon
                 let elem = data.weather[0].icon;
                 setIcons(elem);
-                //получение даты 
+                //get date
                 let day = new Date();
                 let str = formatTime(day);
-                //отобразить время
+                //show time
                 time.textContent = str;
-                //отобразить день недели
                 weekDay.textContent = getDayOfTheWeek(day);    
             })
         });
@@ -71,12 +70,10 @@ window.addEventListener('load', () => {
 
 btn.addEventListener('click', (event) => {
     event.preventDefault();
-    //объявление города поиска
+    //initialize a search city
     let searchCity = input.value;
-    //апи
+    //api
     let cityApi = `https://api.openweathermap.org/data/2.5/weather?q=${searchCity}&appid=${apiKey}`;
-    //сохранение города в local storage
-    localStorage.setItem('city', searchCity);
     //очищение инпута
     input.value = ''
 
@@ -96,14 +93,12 @@ btn.addEventListener('click', (event) => {
             console.log(elem)
             setIcons(elem);
 
-            //получение текущей даты
             const currentDate = new Date();
-            //перевод текущего времени utc в секунды
+            //utc
             const seconds = getCurrentTime(currentDate);
             let localSeconds = seconds + data.timezone;
-            //перевод текущего времени в секундах в дату
             let utcTime = new Date(localSeconds*1000)
-            //время в формате AM/PM
+            //format to AM/PM
             let str = formatTime(utcTime);
             time.textContent = str;
             weekDay.textContent = getDayOfTheWeek(utcTime); 
