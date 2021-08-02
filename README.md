@@ -19,3 +19,7 @@ $ npm start
 * AJAX
 * Vanilla JS
 * OpenWeather API
+
+## Demo
+
+![image](https://github.com/AnnaPalna/Weather-app/blob/main/weather_app.gif)
