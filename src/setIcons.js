@@ -3,7 +3,7 @@ let content = document.querySelector('.main-content');
 
 export function setIcons(elem) {
     if (elem === '01d') {
-        icon.src = `../animated/day.svg`
+        icon.src = '../animated/day.svg'
         content.style.background = 'linear-gradient(to top left, powderblue, pink)'
     }
     if (elem === '01n') {

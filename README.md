@@ -2,6 +2,10 @@
 
 Weather App made with vanilla JS using OpenWeather API
 
+
+## Check it out [here](https://annapalna.github.io/Weather-app/dist/index.html)!
+
+
 ## Installation & Usage
 
 ```sh
